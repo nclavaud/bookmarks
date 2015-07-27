@@ -1,7 +1,7 @@
 .cover {
     width: 140px;
     height: 140px;
-    margin: 5px;
+    margin: 0 5px 5px 0;
     font-size: 0.8em;
     font-family: monospace;
     float: left;
@@ -13,14 +13,15 @@
     padding: 4px;
     background-color: rgba(0, 0, 0, 0.5);
     color: #ffffff;
+    position: absolute;
 }
 
-.source {
+.type {
     padding: 4px;
     background-color: rgba(0, 0, 0, 0.5);
     color: #ffffff;
+    font-size: 0.8em;
     position: absolute;
-    height: 1em;
     bottom: 0px;
     right: 0px;
 }

@@ -1,3 +1,8 @@
+var Glyphicon = ReactBootstrap.Glyphicon;
+var Nav = ReactBootstrap.Nav;
+var NavItem = ReactBootstrap.NavItem;
+var Table = ReactBootstrap.Table;
+
 var Page = React.createClass({
     getInitialState: function() {
         return {display: 'table'};
@@ -7,12 +12,14 @@ var Page = React.createClass({
     },
     render: function() {
         return (
-            <div className="container">
-                <ul className="nav nav-pills">
-                    <li role="display" onClick={this.changeDisplay.bind(this, 'table')} className={'table' == this.state.display ? 'active' : ''}><a href="#">Table</a></li>
-                    <li role="display" onClick={this.changeDisplay.bind(this, 'blocks')} className={'blocks' == this.state.display ? 'active' : ''}><a href="#">Blocks</a></li>
-                </ul>
-                <CoverList url="resources.json" display={this.state.display} />
+            <div className="container" style={{marginTop: "1em"}}>
+                <Nav bsStyle='pills' activeKey={this.state.display} onSelect={this.changeDisplay}>
+                    <NavItem eventKey={'table'} href="#"><Glyphicon glyph="th-list" /></NavItem>
+                    <NavItem eventKey={'blocks'} href="#"><Glyphicon glyph="th" /></NavItem>
+                </Nav>
+                <div style={{"marginTop": "1em"}}>
+                    <CoverList url="resources.json" display={this.state.display} />
+                </div>
             </div>
         );
     }
@@ -40,7 +47,7 @@ var CoverList = React.createClass({
     render: function() {
         if ('blocks' == this.props.display) {
             var covers = this.state.resources.map(function (cover) {
-                return <Cover key={cover.uuid} source={cover.source} title={cover.title} image={cover.image} url={cover.url} />
+                return <Cover key={cover.uuid} type={cover.type} title={cover.title} image={cover.image} url={cover.url} />
             });
 
             return (
@@ -49,11 +56,11 @@ var CoverList = React.createClass({
         }
 
         var rows = this.state.resources.map(function (cover) {
-            return <CoverAsTableRow key={cover.uuid} source={cover.source} title={cover.title} image={cover.image} url={cover.url} />
+            return <CoverAsTableRow key={cover.uuid} type={cover.type} title={cover.title} image={cover.image} url={cover.url} />
         });
 
         return (
-            <table className="table table-condensed table-striped">{rows}</table>
+            <Table striped bordered condensed><tbody>{rows}</tbody></Table>
         );
     }
 });
@@ -64,10 +71,10 @@ var Cover = React.createClass({
             backgroundImage: 'url(' + this.props.image + ')'
         };
         return (
-            <a href={this.props.url}>
+            <a href={this.props.url} target="_blank">
                 <div className="cover" style={style}>
                     <div className="title">{this.props.title}</div>
-                    <div className="source">{this.props.source}</div>
+                    <div className="type">{this.props.type}</div>
                 </div>
             </a>
         );
@@ -79,7 +86,10 @@ var CoverAsTableRow = React.createClass({
         return (
             <tr>
                 <td>
-                    <a href={this.props.url}>{this.props.title}</a>
+                    <a href={this.props.url} target="_blank">{this.props.title}</a>
+                </td>
+                <td>
+                    {this.props.type}
                 </td>
             </tr>
         );
