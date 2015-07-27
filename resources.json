@@ -1,0 +1,18 @@
+[
+    {
+        "uuid": "bc1",
+        "source": "bandcamp",
+        "url": "https://strandflat.bandcamp.com/track/ten-years-from-the-second",
+        "title": "Ten years from the second, by Have The Moskovik",
+        "image": "https://f1.bcbits.com/img/a3801425696_5.jpg",
+        "player": "https://bandcamp.com/EmbeddedPlayer/v=2/track=694908547/size=large/linkcol=0084B4/notracklist=true/twittercard=true/"
+    },
+    {
+        "uuid": "sc1",
+        "source": "soundcloud",
+        "url": "https://soundcloud.com/havethemoskovik/what-a-wonderful-place-this-earth-would-be",
+        "title": "What A Wonderful Place This Earth Would Be",
+        "image": "https://i1.sndcdn.com/artworks-000080845250-7wvy52-t200x200.jpg",
+        "player": "https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F151837891&amp;auto_play=false&amp;show_artwork=true&amp;visual=true&amp;origin=twitter"
+    }
+]
