@@ -1,19 +1,26 @@
 var Page = React.createClass({
     getInitialState: function() {
-        return {count: 3};
+        return {display: 'table'};
+    },
+    changeDisplay: function(display) {
+        this.setState({display: display});
     },
     render: function() {
         return (
-            <div>
-                <CoverList />
+            <div className="container">
+                <ul className="nav nav-pills">
+                    <li role="display" onClick={this.changeDisplay.bind(this, 'table')} className={'table' == this.state.display ? 'active' : ''}><a href="#">Table</a></li>
+                    <li role="display" onClick={this.changeDisplay.bind(this, 'blocks')} className={'blocks' == this.state.display ? 'active' : ''}><a href="#">Blocks</a></li>
+                </ul>
+                <CoverList display={this.state.display} />
             </div>
         );
     }
 });
 
 var CoverList = React.createClass({
-    render: function() {
-        var res = [
+    resources: function() {
+        return [
             {
                 source: "bandcamp",
                 url: "https://strandflat.bandcamp.com/track/ten-years-from-the-second",
@@ -29,13 +36,24 @@ var CoverList = React.createClass({
                 player: "https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F151837891&amp;auto_play=false&amp;show_artwork=true&amp;visual=true&amp;origin=twitter",
             }
         ];
-        var covers = res.map(function (cover) {
-            return <Cover source={cover.source} title={cover.title} image={cover.image} url={cover.url} />
+    },
+    render: function() {
+        if ('blocks' == this.props.display) {
+            var covers = this.resources().map(function (cover) {
+                return <Cover source={cover.source} title={cover.title} image={cover.image} url={cover.url} />
+            });
+
+            return (
+                <div>{covers}</div>
+            );
+        }
+
+        var rows = this.resources().map(function (cover) {
+            return <CoverAsTableRow source={cover.source} title={cover.title} image={cover.image} url={cover.url} />
         });
+
         return (
-            <div>
-                {covers}
-            </div>
+            <table className="table table-condensed table-striped">{rows}</table>
         );
     }
 });
@@ -52,6 +70,18 @@ var Cover = React.createClass({
                     <div className="source">{this.props.source}</div>
                 </div>
             </a>
+        );
+    }
+});
+
+var CoverAsTableRow = React.createClass({
+    render: function() {
+        return (
+            <tr>
+                <td>
+                    <a href={this.props.url}>{this.props.title}</a>
+                </td>
+            </tr>
         );
     }
 });
