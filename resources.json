@@ -2,17 +2,44 @@
     {
         "uuid": "bc1",
         "source": "bandcamp",
+        "type": "song",
         "url": "https://strandflat.bandcamp.com/track/ten-years-from-the-second",
         "title": "Ten years from the second, by Have The Moskovik",
         "image": "https://f1.bcbits.com/img/a3801425696_5.jpg",
         "player": "https://bandcamp.com/EmbeddedPlayer/v=2/track=694908547/size=large/linkcol=0084B4/notracklist=true/twittercard=true/"
     },
     {
+        "uuid": "bc2",
+        "source": "bandcamp.com",
+        "type": "album",
+        "url": "https://deltasleep.bandcamp.com/album/twin-galaxies-2",
+        "title": "Twin Galaxies, by Delta Sleep",
+        "image": "https://f1.bcbits.com/img/a3750314634_5.jpg",
+        "player": "https://bandcamp.com/EmbeddedPlayer/v=2/album=3424703028/size=large/linkcol=0084B4/notracklist=true/twittercard=true/"
+    },
+    {
         "uuid": "sc1",
-        "source": "soundcloud",
-        "url": "https://soundcloud.com/havethemoskovik/what-a-wonderful-place-this-earth-would-be",
-        "title": "What A Wonderful Place This Earth Would Be",
-        "image": "https://i1.sndcdn.com/artworks-000080845250-7wvy52-t200x200.jpg",
-        "player": "https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F151837891&amp;auto_play=false&amp;show_artwork=true&amp;visual=true&amp;origin=twitter"
+        "source": "soundcloud.com",
+        "type": "soundcloud:sound",
+        "url": "https://soundcloud.com/havethemoskovik/temporaire",
+        "title": "Temporaire",
+        "image": "https://i1.sndcdn.com/artworks-000079499252-4vip0n-t200x200.jpg",
+        "player": "https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F149629549&amp;auto_play=false&amp;show_artwork=true&amp;visual=true&amp;origin=twitter"
+    },
+    {
+        "uuid": "es1",
+        "source": "esprit.fr",
+        "type": "product",
+        "url": "http://www.esprit.fr/tunique-100-coton-075CC1F001_620",
+        "title": "Tunique 100 % coton",
+        "image": "http://pics3.esprit.de/Shop/PicPOV_MainView/075CC1F001_620.jpg"
+    },
+    {
+        "uuid": "ws1",
+        "source": "github.io",
+        "type": "website",
+        "url": "https://facebook.github.io/react/index.html",
+        "title": "A JavaScript library for building user interfaces | React",
+        "image": "https://facebook.github.io/react/img/logo_og.png"
     }
 ]
