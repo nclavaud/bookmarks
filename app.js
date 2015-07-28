@@ -30,6 +30,7 @@ var CoverList = React.createClass({
         $.ajax({
             url: this.props.url,
             dataType: 'json',
+            cache: false,
             success: function(data) {
                 this.setState({resources: data});
             }.bind(this),
