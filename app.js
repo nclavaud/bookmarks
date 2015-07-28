@@ -72,12 +72,12 @@ var Cover = React.createClass({
             backgroundImage: 'url(' + this.props.image + ')'
         };
         return (
-            <a href={this.props.url} target="_blank">
+            <Link href={this.props.url}>
                 <div className="cover" style={style}>
                     <div className="title">{this.props.title}</div>
                     <div className="type">{this.props.type}</div>
                 </div>
-            </a>
+            </Link>
         );
     }
 });
@@ -87,12 +87,20 @@ var CoverAsTableRow = React.createClass({
         return (
             <tr>
                 <td>
-                    <a href={this.props.url} target="_blank">{this.props.title}</a>
+                    <Link href={this.props.url}>{this.props.title}</Link>
                 </td>
                 <td>
                     {this.props.type}
                 </td>
             </tr>
+        );
+    }
+});
+
+var Link = React.createClass({
+    render: function() {
+        return (
+            <a href={this.props.href} target="_blank">{this.props.children}</a>
         );
     }
 });
