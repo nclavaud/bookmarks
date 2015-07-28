@@ -41,5 +41,13 @@
         "url": "https://facebook.github.io/react/index.html",
         "title": "A JavaScript library for building user interfaces | React",
         "image": "https://facebook.github.io/react/img/logo_og.png"
+    },
+    {
+        "uuid": "af1",
+        "source": "audiofanzine.com",
+        "type": "product",
+        "url": "http://fr.audiofanzine.com/looper/tc-electronic/ditto-looper/",
+        "title": "TC Electronic Ditto Looper",
+        "image": "http://img.audiofanzine.com/image.php?lang=fr&identifier=id&size=normal&module=product&product_id=172615"
     }
 ]
