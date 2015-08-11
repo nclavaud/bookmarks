@@ -9,12 +9,14 @@ class Resource
     private $uuid;
     private $url;
     private $title;
+    private $imageUrl;
 
-    public function __construct(Uuid $uuid, Url $url, $title)
+    public function __construct(Uuid $uuid, Url $url, $title, Url $imageUrl)
     {
         $this->uuid = $uuid;
         $this->url = $url;
         $this->title = $title;
+        $this->imageUrl = $imageUrl;
     }
 
     public function getUuid()
@@ -30,6 +32,11 @@ class Resource
     public function getTitle()
     {
         return $this->title;
+    }
+
+    public function getImageUrl()
+    {
+        return $this->imageUrl;
     }
 
     public function __toString()

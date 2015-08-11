@@ -14,11 +14,13 @@ class Fetcher
         $crawler = new Crawler($response->getContent());
 
         $title = $crawler->filterXPath('//head/title')->text();
+        $imageUrl = $crawler->filterXPath('//meta[@property="og:image"]')->attr('content');
 
         return new Resource(
             Uuid::fromString(Uuid::NIL),
             $url,
-            $title
+            $title,
+            new Url($imageUrl)
         );
     }
 }
