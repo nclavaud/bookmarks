@@ -18,7 +18,7 @@ var Page = React.createClass({
                     <NavItem eventKey={'blocks'} href="#"><Glyphicon glyph="th" /></NavItem>
                 </Nav>
                 <div style={{"marginTop": "1em"}}>
-                    <CoverList url="resources.json" display={this.state.display} />
+                    <CoverList url="http://localhost:8081/" display={this.state.display} />
                 </div>
             </div>
         );
