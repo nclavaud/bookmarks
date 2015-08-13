@@ -28,4 +28,21 @@ class BookmarkRepository
 
         return $bookmarks;
     }
+
+    public function save(Bookmark $bookmark)
+    {
+        $statement = $this->connection->prepare(
+            'INSERT INTO bookmarks (uuid, url, data) VALUES (:uuid, :url, :data);'
+        );
+
+        $statement->execute(
+            array(
+                ':uuid' => (string) $bookmark->getUuid(),
+                ':url' => (string) $bookmark->getUrl(),
+                ':data' => json_encode($bookmark->getData()),
+            )
+        );
+
+        return $bookmark;
+    }
 }
