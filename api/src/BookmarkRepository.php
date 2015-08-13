@@ -22,6 +22,7 @@ class BookmarkRepository
             $bookmark = json_decode($row['data']);
             $bookmark->uuid = $row['uuid'];
             $bookmark->url = $row['url'];
+            $bookmark->title = !empty($bookmark->title) ?: $bookmark->url;
             $bookmarks[] = $bookmark;
         }
 
