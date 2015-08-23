@@ -1,1 +1,3 @@
-DEBUG=1 DSN=sqlite:$PWD/database.sqlite php -S 0.0.0.0:8081 -t web/
+#!/bin/bash
+
+php -S 0.0.0.0:8080 -t web/

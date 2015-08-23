@@ -1,0 +1,14 @@
+client:
+    image: nginx
+    ports:
+        - "80:80"
+    volumes:
+        - client:/usr/share/nginx/html
+    links:
+        - api
+api:
+    build: api
+    ports:
+        - "8080:8080"
+    volumes:
+        - api:/var/www
