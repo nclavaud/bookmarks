@@ -12,3 +12,9 @@ api:
         - "8080:8080"
     volumes:
         - api:/var/www
+    links:
+        - rabbitmq
+rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+        - "8081:15672"
