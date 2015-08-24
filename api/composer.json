@@ -8,6 +8,6 @@
         "silex/silex": "^1.3",
         "ramsey/uuid": "^2.8",
         "beberlei/assert": "^2.3",
-        "fiunchinho/rabbitmq-service-provider": "^1.0"
+        "videlalvaro/php-amqplib": "^2.5"
     }
 }

@@ -2,33 +2,13 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use fiunchinho\Silex\Provider\RabbitServiceProvider;
 use Rhumsaa\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 $app = new Silex\Application();
-
-$app->register(new RabbitServiceProvider(), array(
-    'rabbit.connections' => array(
-        'default' => array(
-            'host' => 'rabbitmq',
-            'port' => 5672,
-            'user' => 'guest',
-            'password' => 'guest',
-            'vhost' => '/',
-        ),
-    ),
-    'rabbit.producers' => array(
-        'bookmark' => array(
-            'connection' => 'default',
-            'exchange_options' => array(
-                'name' => 'bookmark_exchange',
-                'type' => 'topic',
-            ),
-        ),
-    ),
-));
 
 $app['debug'] = getenv('DEBUG');
 
@@ -54,8 +34,17 @@ $app->post('/', function (Request $request) use ($app) {
     $message = json_encode((object) array(
         'event' => 'bookmark_has_been_created',
         'uuid' => (string) $bookmark->getUuid(),
+        'url' => (string) $bookmark->getUrl(),
     ));
-    $app['rabbit.producer']['bookmark']->publish($message);
+
+    // publish to RabbitMQ
+    $connection = new AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
+    $channel = $connection->channel();
+    $channel->queue_declare('bookmark', false, false, false, false);
+    $msg = new AMQPMessage($message);
+    $channel->basic_publish($msg, '', 'bookmark');
+    $channel->close();
+    $connection->close();
 
     return $app->json($bookmark, 201);
 });
