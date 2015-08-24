@@ -8,6 +8,7 @@
         "ramsey/uuid": "^2.8",
         "beberlei/assert": "^2.3",
         "symfony/dom-crawler": "^2.7",
-        "kriswallsmith/buzz": "^0.15.0"
+        "kriswallsmith/buzz": "^0.15.0",
+        "videlalvaro/php-amqplib": "^2.5"
     }
 }
