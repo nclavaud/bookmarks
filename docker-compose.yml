@@ -22,6 +22,7 @@ fetcher:
         - fetcher:/var/www
     links:
         - rabbitmq
+        - api
 
 rabbitmq:
     image: rabbitmq:3-management

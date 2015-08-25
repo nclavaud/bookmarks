@@ -40,6 +40,18 @@ $callback = function ($msg) use ($fetcher) {
     echo sprintf('%s: %s%s', 'URL', $resource->getUrl(), PHP_EOL);
     echo sprintf('%s: %s%s', 'Title', $resource->getTitle(), PHP_EOL);
     echo sprintf('%s: %s%s', 'Image URL', $resource->getImageUrl(), PHP_EOL);
+
+    // call API
+    $url = sprintf('http://api:8080/%s', $message->uuid);
+    $headers = array(
+        'Content-Type' => 'application/json',
+    );
+    $payload = json_encode((object) array(
+        'title' => $resource->getTitle(),
+        'imageUrl' => (string) $resource->getImageUrl(),
+    ));
+    $browser = new \Buzz\Browser(new \Buzz\Client\Curl());
+    $response = $browser->post($url, $headers, $payload);
 };
 
 $channel->basic_consume('bookmark', '', false, true, false, false, $callback);
