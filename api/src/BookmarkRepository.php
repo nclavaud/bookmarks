@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Rhumsaa\Uuid\Uuid;
+
 class BookmarkRepository
 {
     /**
@@ -27,6 +29,20 @@ class BookmarkRepository
         }
 
         return $bookmarks;
+    }
+
+    public function find(Uuid $uuid)
+    {
+        $statement = $this->connection->prepare('SELECT * FROM bookmarks WHERE uuid = :uuid;');
+        $statement->execute(
+            array(
+                'uuid' => (string) $uuid,
+            )
+        );
+
+        $row = $statement->fetch(\PDO::FETCH_ASSOC);
+
+        return Bookmark::unserialize($row);
     }
 
     public function save(Bookmark $bookmark)
