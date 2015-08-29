@@ -45,4 +45,22 @@ HTML;
         $this->assertEquals(null, $parsedData->title);
         $this->assertEquals(null, $parsedData->imageUrl);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_use_first_image_tag_if_open_graph_image_is_missing()
+    {
+        $content = <<<'HTML'
+<html>
+    <body>
+        <img src="http://example.org/image-tag.jpg" />
+    </body>
+</html>
+HTML;
+
+        $parsedData = (new Parser())->parse($content);
+
+        $this->assertEquals('http://example.org/image-tag.jpg', $parsedData->imageUrl);
+    }
 }

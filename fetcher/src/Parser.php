@@ -21,7 +21,11 @@ class Parser
         try {
             $data->imageUrl = $crawler->filterXPath('//meta[@property="og:image"]')->attr('content');
         } catch (\InvalidArgumentException $e) {
-            $data->imageUrl = null;
+            try {
+                $data->imageUrl = $crawler->filterXPath('//img')->attr('src');
+            } catch (\InvalidArgumentException $e) {
+                $data->imageUrl = null;
+            }
         }
 
         return $data;
