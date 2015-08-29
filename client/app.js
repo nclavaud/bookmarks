@@ -2,6 +2,8 @@ var Glyphicon = ReactBootstrap.Glyphicon;
 var Nav = ReactBootstrap.Nav;
 var NavItem = ReactBootstrap.NavItem;
 var Table = ReactBootstrap.Table;
+var Input = ReactBootstrap.Input;
+var ButtonInput = ReactBootstrap.ButtonInput;
 
 var Page = React.createClass({
     getInitialState: function() {
@@ -10,6 +12,20 @@ var Page = React.createClass({
     changeDisplay: function(display) {
         this.setState({display: display});
     },
+    handleAddBookmarkSubmit: function(bookmark) {
+        $.ajax({
+            url: "http://localhost:8080/",
+            dataType: "json",
+            type: "POST",
+            data: bookmark,
+            success: function(data) {
+                // refresh view
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error("Error when adding bookmark", status, err.toString());
+            }.bind(this)
+        });
+    },
     render: function() {
         return (
             <div className="container" style={{marginTop: "1em"}}>
@@ -17,10 +33,35 @@ var Page = React.createClass({
                     <NavItem eventKey={'table'} href="#"><Glyphicon glyph="th-list" /></NavItem>
                     <NavItem eventKey={'blocks'} href="#"><Glyphicon glyph="th" /></NavItem>
                 </Nav>
+                <AddBookmarkForm onAddBookmarkSubmit={this.handleAddBookmarkSubmit} />
                 <div style={{"marginTop": "1em"}}>
                     <CoverList url="http://localhost:8080/" display={this.state.display} />
                 </div>
             </div>
+        );
+    }
+});
+
+var AddBookmarkForm = React.createClass({
+    handleSubmit: function(e) {
+        e.preventDefault();
+
+        var url = this.refs.url.getValue().trim();
+        if (!url) {
+            return;
+        }
+
+        this.props.onAddBookmarkSubmit({url: url});
+
+        this.refs.url.getInputDOMNode().value = "";
+        return;
+    },
+    render: function() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <Input type="text" placeholder="Enter an URL to bookmark" ref="url" />
+                <ButtonInput type="submit" value="Add" />
+            </form>
         );
     }
 });
