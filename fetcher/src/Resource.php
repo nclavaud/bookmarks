@@ -11,7 +11,7 @@ class Resource
     private $title;
     private $imageUrl;
 
-    public function __construct(Uuid $uuid, Url $url, $title, Url $imageUrl)
+    public function __construct(Uuid $uuid, Url $url, $title, Url $imageUrl = null)
     {
         $this->uuid = $uuid;
         $this->url = $url;

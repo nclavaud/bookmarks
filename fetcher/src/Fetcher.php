@@ -17,7 +17,7 @@ class Fetcher
             Uuid::fromString(Uuid::NIL),
             $url,
             $parsedData->title,
-            new Url($parsedData->imageUrl)
+            (null !== $parsedData->imageUrl) ? new Url($parsedData->imageUrl) : null
         );
     }
 }

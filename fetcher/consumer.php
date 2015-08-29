@@ -48,7 +48,7 @@ $callback = function ($msg) use ($fetcher) {
     );
     $payload = json_encode((object) array(
         'title' => $resource->getTitle(),
-        'imageUrl' => (string) $resource->getImageUrl(),
+        'imageUrl' => (null !== $resource->getImageUrl()) ? (string) $resource->getImageUrl() : null,
     ));
     $browser = new \Buzz\Browser(new \Buzz\Client\Curl());
     $response = $browser->post($url, $headers, $payload);
