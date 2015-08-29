@@ -29,4 +29,20 @@ HTML;
         $this->assertEquals('My blog', $parsedData->title);
         $this->assertEquals('http://example.org/image.jpg', $parsedData->imageUrl);
     }
+
+    /**
+     * @test
+     */
+    public function it_can_parse_an_empty_web_page()
+    {
+        $content = <<<'HTML'
+<html>
+</html>
+HTML;
+
+        $parsedData = (new Parser())->parse($content);
+
+        $this->assertEquals(null, $parsedData->title);
+        $this->assertEquals(null, $parsedData->imageUrl);
+    }
 }

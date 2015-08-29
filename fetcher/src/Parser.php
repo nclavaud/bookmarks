@@ -12,8 +12,17 @@ class Parser
 
         $crawler = new Crawler($content);
 
-        $data->title = $crawler->filterXPath('//head/title')->text();
-        $data->imageUrl = $crawler->filterXPath('//meta[@property="og:image"]')->attr('content');
+        try {
+            $data->title = $crawler->filterXPath('//head/title')->text();
+        } catch (\InvalidArgumentException $e) {
+            $data->title = null;
+        }
+
+        try {
+            $data->imageUrl = $crawler->filterXPath('//meta[@property="og:image"]')->attr('content');
+        } catch (\InvalidArgumentException $e) {
+            $data->imageUrl = null;
+        }
 
         return $data;
     }
