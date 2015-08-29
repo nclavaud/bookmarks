@@ -61,4 +61,20 @@ class BookmarkRepository
 
         return $bookmark;
     }
+
+    public function update(Bookmark $bookmark)
+    {
+        $statement = $this->connection->prepare(
+            'UPDATE bookmarks SET data = :data WHERE uuid = :uuid;'
+        );
+
+        $statement->execute(
+            array(
+                ':uuid' => (string) $bookmark->getUuid(),
+                ':data' => json_encode($bookmark->getData()),
+            )
+        );
+
+        return $bookmark;
+    }
 }

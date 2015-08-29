@@ -63,7 +63,7 @@ $app->post('/{uuid}', function (Request $request, $uuid) use ($app) {
     $bookmark->updateTitle($request->request->get('title'));
     $bookmark->updateImageUrl(new APp\Url($request->request->get('imageUrl')));
 
-    $app['bookmark.repository']->save($bookmark);
+    $app['bookmark.repository']->update($bookmark);
 
     return $app->json($bookmark, 200);
 });
