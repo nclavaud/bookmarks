@@ -1,9 +1,10 @@
+var Button = ReactBootstrap.Button;
+var ButtonInput = ReactBootstrap.ButtonInput;
 var Glyphicon = ReactBootstrap.Glyphicon;
+var Input = ReactBootstrap.Input;
 var Nav = ReactBootstrap.Nav;
 var NavItem = ReactBootstrap.NavItem;
 var Table = ReactBootstrap.Table;
-var Input = ReactBootstrap.Input;
-var ButtonInput = ReactBootstrap.ButtonInput;
 
 var Page = React.createClass({
     getInitialState: function() {
@@ -98,7 +99,7 @@ var CoverList = React.createClass({
         }
 
         var rows = this.state.resources.map(function (cover) {
-            return <CoverAsTableRow key={cover.uuid} type={cover.type} title={cover.title} image={cover.image} url={cover.url} />
+            return <CoverAsTableRow key={cover.uuid} bookmarkUuid={cover.uuid} type={cover.type} title={cover.title} image={cover.image} url={cover.url} />
         });
 
         return (
@@ -124,6 +125,19 @@ var Cover = React.createClass({
 });
 
 var CoverAsTableRow = React.createClass({
+    handleBookmarkDelete: function(bookmarkUuid) {
+        $.ajax({
+            url: "http://localhost:8080/" + bookmarkUuid + "/delete",
+            dataType: "json",
+            type: "POST",
+            success: function(data) {
+                alert('done');
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error("Error when deleting bookmark", status, err.toString());
+            }.bind(this)
+        });
+    },
     render: function() {
         return (
             <tr>
@@ -133,7 +147,21 @@ var CoverAsTableRow = React.createClass({
                 <td>
                     {this.props.type}
                 </td>
+                <td>
+                    <DeleteBookmarkButton bookmarkUuid={this.props.bookmarkUuid} onBookmarkDelete={this.handleBookmarkDelete} />
+                </td>
             </tr>
+        );
+    }
+});
+
+var DeleteBookmarkButton = React.createClass({
+    handleClick: function() {
+        this.props.onBookmarkDelete(this.props.bookmarkUuid);
+    },
+    render: function() {
+        return (
+            <Button bsStyle="danger" bsSize="xsmall" onClick={this.handleClick}>Delete</Button>
         );
     }
 });
