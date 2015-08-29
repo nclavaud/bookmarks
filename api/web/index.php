@@ -68,4 +68,10 @@ $app->post('/{uuid}', function (Request $request, $uuid) use ($app) {
     return $app->json($bookmark, 200);
 });
 
+$app->post('/{uuid}/delete', function (Request $request, $uuid) use ($app) {
+    $bookmark = $app['bookmark.repository']->remove(Uuid::fromString($uuid));
+
+    return $app->json($bookmark, 200);
+});
+
 $app->run();

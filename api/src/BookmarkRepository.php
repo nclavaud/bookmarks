@@ -77,4 +77,18 @@ class BookmarkRepository
 
         return $bookmark;
     }
+
+    public function remove(Uuid $uuid)
+    {
+        $bookmark = $this->find($uuid);
+
+        $statement = $this->connection->prepare('DELETE FROM bookmarks WHERE uuid = :uuid;');
+        $statement->execute(
+            array(
+                'uuid' => (string) $uuid,
+            )
+        );
+
+        return $bookmark;
+    }
 }
