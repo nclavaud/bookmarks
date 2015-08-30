@@ -68,6 +68,12 @@ var AddBookmarkForm = React.createClass({
 });
 
 var BookmarkList = React.createClass({
+    getInitialState: function() {
+        return {resources: []};
+    },
+    componentDidMount: function() {
+        this.loadData();
+    },
     loadData: function() {
         $.ajax({
             url: this.props.url,
@@ -81,11 +87,18 @@ var BookmarkList = React.createClass({
             }.bind(this)
         });
     },
-    componentDidMount: function() {
-        this.loadData();
-    },
-    getInitialState: function() {
-        return {resources: []};
+    handleBookmarkDelete: function(bookmarkUuid) {
+        $.ajax({
+            url: "http://localhost:8080/" + bookmarkUuid + "/delete",
+            dataType: "json",
+            type: "POST",
+            success: function(data) {
+                alert('done');
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error("Error when deleting bookmark", status, err.toString());
+            }.bind(this)
+        });
     },
     render: function() {
         if ('blocks' == this.props.display) {
@@ -99,8 +112,8 @@ var BookmarkList = React.createClass({
         }
 
         var rows = this.state.resources.map(function (bookmark) {
-            return <BookmarkAsTableRow key={bookmark.uuid} bookmarkUuid={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} />
-        });
+            return <BookmarkAsTableRow key={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} onBookmarkDelete={this.handleBookmarkDelete.bind(this, bookmark.uuid)} />
+        }, this);
 
         return (
             <Table striped bordered condensed><tbody>{rows}</tbody></Table>
@@ -125,19 +138,6 @@ var Bookmark = React.createClass({
 });
 
 var BookmarkAsTableRow = React.createClass({
-    handleBookmarkDelete: function(bookmarkUuid) {
-        $.ajax({
-            url: "http://localhost:8080/" + bookmarkUuid + "/delete",
-            dataType: "json",
-            type: "POST",
-            success: function(data) {
-                alert('done');
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error("Error when deleting bookmark", status, err.toString());
-            }.bind(this)
-        });
-    },
     render: function() {
         return (
             <tr>
@@ -148,20 +148,9 @@ var BookmarkAsTableRow = React.createClass({
                     {this.props.type}
                 </td>
                 <td>
-                    <DeleteBookmarkButton bookmarkUuid={this.props.bookmarkUuid} onBookmarkDelete={this.handleBookmarkDelete} />
+                    <Button bsStyle="danger" bsSize="xsmall" onClick={this.props.onBookmarkDelete}>Delete</Button>
                 </td>
             </tr>
-        );
-    }
-});
-
-var DeleteBookmarkButton = React.createClass({
-    handleClick: function() {
-        this.props.onBookmarkDelete(this.props.bookmarkUuid);
-    },
-    render: function() {
-        return (
-            <Button bsStyle="danger" bsSize="xsmall" onClick={this.handleClick}>Delete</Button>
         );
     }
 });
