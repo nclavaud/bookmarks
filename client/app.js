@@ -36,7 +36,7 @@ var Page = React.createClass({
                 </Nav>
                 <AddBookmarkForm onAddBookmarkSubmit={this.handleAddBookmarkSubmit} />
                 <div style={{"marginTop": "1em"}}>
-                    <CoverList url="http://localhost:8080/" display={this.state.display} />
+                    <BookmarkList url="http://localhost:8080/" display={this.state.display} />
                 </div>
             </div>
         );
@@ -67,7 +67,7 @@ var AddBookmarkForm = React.createClass({
     }
 });
 
-var CoverList = React.createClass({
+var BookmarkList = React.createClass({
     loadData: function() {
         $.ajax({
             url: this.props.url,
@@ -89,17 +89,17 @@ var CoverList = React.createClass({
     },
     render: function() {
         if ('blocks' == this.props.display) {
-            var covers = this.state.resources.map(function (cover) {
-                return <Cover key={cover.uuid} type={cover.type} title={cover.title} image={cover.image} url={cover.url} />
+            var bookmarks = this.state.resources.map(function (bookmark) {
+                return <Bookmark key={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} />
             });
 
             return (
-                <div>{covers}</div>
+                <div>{bookmarks}</div>
             );
         }
 
-        var rows = this.state.resources.map(function (cover) {
-            return <CoverAsTableRow key={cover.uuid} bookmarkUuid={cover.uuid} type={cover.type} title={cover.title} image={cover.image} url={cover.url} />
+        var rows = this.state.resources.map(function (bookmark) {
+            return <BookmarkAsTableRow key={bookmark.uuid} bookmarkUuid={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} />
         });
 
         return (
@@ -108,14 +108,14 @@ var CoverList = React.createClass({
     }
 });
 
-var Cover = React.createClass({
+var Bookmark = React.createClass({
     render: function() {
         var style = {
             backgroundImage: 'url(' + this.props.image + ')'
         };
         return (
             <Link href={this.props.url}>
-                <div className="cover" style={style}>
+                <div className="bookmark" style={style}>
                     <div className="title">{this.props.title}</div>
                     <div className="type">{this.props.type}</div>
                 </div>
@@ -124,7 +124,7 @@ var Cover = React.createClass({
     }
 });
 
-var CoverAsTableRow = React.createClass({
+var BookmarkAsTableRow = React.createClass({
     handleBookmarkDelete: function(bookmarkUuid) {
         $.ajax({
             url: "http://localhost:8080/" + bookmarkUuid + "/delete",
