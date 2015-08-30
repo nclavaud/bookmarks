@@ -8,14 +8,39 @@ var Table = ReactBootstrap.Table;
 
 var Page = React.createClass({
     getInitialState: function() {
-        return {display: 'table'};
+        return {
+            resources: [],
+            display: 'table'
+        };
+    },
+    componentDidMount: function() {
+        this.loadData();
+    },
+    loadData: function() {
+        $.ajax({
+            url: this.props.url,
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                this.setState({
+                    resources: data,
+                    display: this.state.display
+                });
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        });
     },
     changeDisplay: function(display) {
-        this.setState({display: display});
+        this.setState({
+            resources: this.state.resources,
+            display: display
+        });
     },
     handleAddBookmarkSubmit: function(bookmark) {
         $.ajax({
-            url: "http://localhost:8080/",
+            url: this.props.url,
             dataType: "json",
             type: "POST",
             data: bookmark,
@@ -27,6 +52,29 @@ var Page = React.createClass({
             }.bind(this)
         });
     },
+    handleBookmarkDelete: function(bookmarkUuid) {
+        $.ajax({
+            url: this.props.url + bookmarkUuid + "/delete",
+            dataType: "json",
+            type: "POST",
+            success: function(data) {
+                this.removeBookmark(bookmarkUuid);
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error("Error when deleting bookmark", status, err.toString());
+            }.bind(this)
+        });
+    },
+    removeBookmark: function(bookmarkUuid) {
+        var bookmarks = this.state.resources;
+        bookmarks = bookmarks.filter(function (bookmark) {
+            return bookmark.uuid != bookmarkUuid;
+        });
+        this.setState({
+            resources: bookmarks,
+            display: this.state.display
+        });
+    },
     render: function() {
         return (
             <div className="container" style={{marginTop: "1em"}}>
@@ -36,7 +84,7 @@ var Page = React.createClass({
                 </Nav>
                 <AddBookmarkForm onAddBookmarkSubmit={this.handleAddBookmarkSubmit} />
                 <div style={{"marginTop": "1em"}}>
-                    <BookmarkList url="http://localhost:8080/" display={this.state.display} />
+                    <BookmarkList resources={this.state.resources} display={this.state.display} onBookmarkDelete={this.handleBookmarkDelete} />
                 </div>
             </div>
         );
@@ -68,48 +116,9 @@ var AddBookmarkForm = React.createClass({
 });
 
 var BookmarkList = React.createClass({
-    getInitialState: function() {
-        return {resources: []};
-    },
-    componentDidMount: function() {
-        this.loadData();
-    },
-    loadData: function() {
-        $.ajax({
-            url: this.props.url,
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                this.setState({resources: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
-    },
-    handleBookmarkDelete: function(bookmarkUuid) {
-        $.ajax({
-            url: "http://localhost:8080/" + bookmarkUuid + "/delete",
-            dataType: "json",
-            type: "POST",
-            success: function(data) {
-                this.removeBookmark(bookmarkUuid);
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error("Error when deleting bookmark", status, err.toString());
-            }.bind(this)
-        });
-    },
-    removeBookmark: function(bookmarkUuid) {
-        var bookmarks = this.state.resources;
-        bookmarks = bookmarks.filter(function (bookmark) {
-            return bookmark.uuid != bookmarkUuid;
-        });
-        this.setState({resources: bookmarks});
-    },
     render: function() {
         if ('blocks' == this.props.display) {
-            var bookmarks = this.state.resources.map(function (bookmark) {
+            var bookmarks = this.props.resources.map(function (bookmark) {
                 return <Bookmark key={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} />
             });
 
@@ -118,8 +127,8 @@ var BookmarkList = React.createClass({
             );
         }
 
-        var rows = this.state.resources.map(function (bookmark) {
-            return <BookmarkAsTableRow key={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} onBookmarkDelete={this.handleBookmarkDelete.bind(this, bookmark.uuid)} />
+        var rows = this.props.resources.map(function (bookmark) {
+            return <BookmarkAsTableRow key={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} onBookmarkDelete={this.props.onBookmarkDelete.bind(null, bookmark.uuid)}/>
         }, this);
 
         return (
@@ -171,6 +180,6 @@ var Link = React.createClass({
 });
 
 React.render(
-    <Page />,
+    <Page url="http://localhost:8080/" />,
     document.getElementById('a')
 );
