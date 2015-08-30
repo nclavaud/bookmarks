@@ -45,7 +45,7 @@ var Page = React.createClass({
             type: "POST",
             data: bookmark,
             success: function(data) {
-                // refresh view
+                this.addBookmark(data);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error("Error when adding bookmark", status, err.toString());
@@ -63,6 +63,12 @@ var Page = React.createClass({
             error: function(xhr, status, err) {
                 console.error("Error when deleting bookmark", status, err.toString());
             }.bind(this)
+        });
+    },
+    addBookmark: function(bookmark) {
+        this.setState({
+            resources: this.state.resources.concat(bookmark),
+            display: this.state.display
         });
     },
     removeBookmark: function(bookmarkUuid) {
