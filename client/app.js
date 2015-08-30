@@ -145,8 +145,9 @@ var BookmarkList = React.createClass({
 
 var Bookmark = React.createClass({
     render: function() {
+        var image = this.props.image || 'loader.png';
         var style = {
-            backgroundImage: 'url(' + this.props.image + ')'
+            backgroundImage: 'url(' + image + ')'
         };
         return (
             <Link href={this.props.url}>
