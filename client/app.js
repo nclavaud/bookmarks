@@ -15,8 +15,35 @@ var Page = React.createClass({
     },
     componentDidMount: function() {
         this.loadData();
+        setInterval(this.loadData, this.props.pollInterval);
+    },
+    pollPause: false,
+    isPollingOnPause: function() {
+        return this.pollPause;
+    },
+    pausePolling: function() {
+        this.pollPause = true;
+        console.log('pause polling');
+    },
+    resumePolling: function() {
+        this.pollPause = false;
+        console.log('resume polling');
+    },
+    setPolling: function() {
+        // pause polling if all resources are completed
+        var incomplete = this.state.resources.filter(function (bookmark) {
+            return bookmark.state == 'incomplete';
+        });
+        if (incomplete.length > 0) {
+            this.resumePolling();
+        } else {
+            this.pausePolling();
+        }
     },
     loadData: function() {
+        if (this.isPollingOnPause()) {
+            return;
+        }
         $.ajax({
             url: this.props.url,
             dataType: 'json',
@@ -26,6 +53,7 @@ var Page = React.createClass({
                     resources: data,
                     display: this.state.display
                 });
+                this.setPolling();
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -46,6 +74,7 @@ var Page = React.createClass({
             data: bookmark,
             success: function(data) {
                 this.addBookmark(data);
+                this.resumePolling();
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error("Error when adding bookmark", status, err.toString());
@@ -190,6 +219,6 @@ var Link = React.createClass({
 });
 
 React.render(
-    <Page url="http://localhost:8080/" />,
+    <Page url="http://localhost:8080/" pollInterval={2000}/>,
     document.getElementById('a')
 );
