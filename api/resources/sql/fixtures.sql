@@ -1,6 +1,6 @@
 INSERT INTO bookmarks (uuid, url, data) VALUES
     (
-        '00000000-0000-0000-0000-000000000bc1',
+        '00000000-0000-0000-0000-000000000001',
         'https://strandflat.bandcamp.com/track/ten-years-from-the-second',
         '{
             "state": "complete",
@@ -12,7 +12,7 @@ INSERT INTO bookmarks (uuid, url, data) VALUES
         }'
     ),
     (
-        '00000000-0000-0000-0000-000000000bc2',
+        '00000000-0000-0000-0000-000000000002',
         'https://deltasleep.bandcamp.com/album/twin-galaxies-2',
         '{
             "state": "complete",
@@ -24,7 +24,7 @@ INSERT INTO bookmarks (uuid, url, data) VALUES
         }'
     ),
     (
-        '00000000-0000-0000-0000-000000000sc1',
+        '00000000-0000-0000-0000-000000000003',
         'https://soundcloud.com/havethemoskovik/temporaire',
         '{
             "state": "complete",
@@ -36,7 +36,7 @@ INSERT INTO bookmarks (uuid, url, data) VALUES
         }'
     ),
     (
-        '00000000-0000-0000-0000-000000000es1',
+        '00000000-0000-0000-0000-000000000004',
         'http://www.esprit.fr/tunique-100-coton-075CC1F001_620',
         '{
             "state": "complete",
@@ -47,7 +47,7 @@ INSERT INTO bookmarks (uuid, url, data) VALUES
         }'
     ),
     (
-        '00000000-0000-0000-0000-000000000ws1',
+        '00000000-0000-0000-0000-000000000005',
         'https://facebook.github.io/react/index.html',
         '{
             "state": "complete",
@@ -58,7 +58,7 @@ INSERT INTO bookmarks (uuid, url, data) VALUES
         }'
     ),
     (
-        '00000000-0000-0000-0000-000000000af1',
+        '00000000-0000-0000-0000-000000000006',
         'http://fr.audiofanzine.com/looper/tc-electronic/ditto-looper/',
         '{
             "state": "complete",
