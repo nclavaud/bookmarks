@@ -93,12 +93,19 @@ var BookmarkList = React.createClass({
             dataType: "json",
             type: "POST",
             success: function(data) {
-                alert('done');
+                this.removeBookmark(bookmarkUuid);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error("Error when deleting bookmark", status, err.toString());
             }.bind(this)
         });
+    },
+    removeBookmark: function(bookmarkUuid) {
+        var bookmarks = this.state.resources;
+        bookmarks = bookmarks.filter(function (bookmark) {
+            return bookmark.uuid != bookmarkUuid;
+        });
+        this.setState({resources: bookmarks});
     },
     render: function() {
         if ('blocks' == this.props.display) {
