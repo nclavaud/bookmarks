@@ -134,7 +134,7 @@ var BookmarkList = React.createClass({
         }
 
         var rows = this.props.resources.map(function (bookmark) {
-            return <BookmarkAsTableRow key={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} onBookmarkDelete={this.props.onBookmarkDelete.bind(null, bookmark.uuid)}/>
+            return <BookmarkAsTableRow key={bookmark.uuid} state={bookmark.state} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} onBookmarkDelete={this.props.onBookmarkDelete.bind(null, bookmark.uuid)}/>
         }, this);
 
         return (
@@ -168,6 +168,9 @@ var BookmarkAsTableRow = React.createClass({
                 </td>
                 <td>
                     {this.props.type}
+                </td>
+                <td>
+                    {this.props.state}
                 </td>
                 <td>
                     <Button bsStyle="danger" bsSize="xsmall" onClick={this.props.onBookmarkDelete}>Delete</Button>
