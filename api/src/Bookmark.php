@@ -14,7 +14,9 @@ class Bookmark
     {
         $this->uuid = $uuid;
         $this->url = $url;
-        $this->data = array();
+        $this->data = array(
+            'type' => 'unknown',
+        );
     }
 
     public function getUuid()
