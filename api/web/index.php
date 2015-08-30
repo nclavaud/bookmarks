@@ -60,8 +60,10 @@ $app->post('/', function (Request $request) use ($app) {
 $app->post('/{uuid}', function (Request $request, $uuid) use ($app) {
     $bookmark = $app['bookmark.repository']->find(Uuid::fromString($uuid));
 
-    $bookmark->updateTitle($request->request->get('title'));
-    $bookmark->updateImageUrl(new APp\Url($request->request->get('imageUrl')));
+    $bookmark->complete(
+        $request->request->get('title'),
+        new App\Url($request->request->get('imageUrl'))
+    );
 
     $app['bookmark.repository']->update($bookmark);
 

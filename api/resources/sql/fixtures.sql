@@ -3,6 +3,7 @@ INSERT INTO bookmarks (uuid, url, data) VALUES
         '00000000-0000-0000-0000-000000000bc1',
         'https://strandflat.bandcamp.com/track/ten-years-from-the-second',
         '{
+            "state": "complete",
             "source": "bandcamp.com",
             "type": "song",
             "title": "Ten years from the second, by Have The Moskovik",
@@ -14,6 +15,7 @@ INSERT INTO bookmarks (uuid, url, data) VALUES
         '00000000-0000-0000-0000-000000000bc2',
         'https://deltasleep.bandcamp.com/album/twin-galaxies-2',
         '{
+            "state": "complete",
             "source": "bandcamp.com",
             "type": "album",
             "title": "Twin Galaxies, by Delta Sleep",
@@ -25,6 +27,7 @@ INSERT INTO bookmarks (uuid, url, data) VALUES
         '00000000-0000-0000-0000-000000000sc1',
         'https://soundcloud.com/havethemoskovik/temporaire',
         '{
+            "state": "complete",
             "source": "soundcloud.com",
             "type": "soundcloud:sound",
             "title": "Temporaire",
@@ -36,6 +39,7 @@ INSERT INTO bookmarks (uuid, url, data) VALUES
         '00000000-0000-0000-0000-000000000es1',
         'http://www.esprit.fr/tunique-100-coton-075CC1F001_620',
         '{
+            "state": "complete",
             "source": "esprit.fr",
             "type": "product",
             "title": "Tunique 100 % coton",
@@ -46,6 +50,7 @@ INSERT INTO bookmarks (uuid, url, data) VALUES
         '00000000-0000-0000-0000-000000000ws1',
         'https://facebook.github.io/react/index.html',
         '{
+            "state": "complete",
             "source": "github.io",
             "type": "website",
             "title": "A JavaScript library for building user interfaces | React",
@@ -56,6 +61,7 @@ INSERT INTO bookmarks (uuid, url, data) VALUES
         '00000000-0000-0000-0000-000000000af1',
         'http://fr.audiofanzine.com/looper/tc-electronic/ditto-looper/',
         '{
+            "state": "complete",
             "source": "audiofanzine.com",
             "type": "product",
             "title": "TC Electronic Ditto Looper",

@@ -6,6 +6,9 @@ use Rhumsaa\Uuid\Uuid;
 
 class Bookmark implements \JsonSerializable
 {
+    const STATE_INCOMPLETE = 'incomplete';
+    const STATE_COMPLETE = 'complete';
+
     private $uuid;
     private $url;
     private $data;
@@ -16,7 +19,17 @@ class Bookmark implements \JsonSerializable
         $this->url = $url;
         $this->data = array(
             'type' => 'unknown',
+            'state' => self::STATE_INCOMPLETE,
         );
+    }
+
+    public function complete($title, Url $imageUrl)
+    {
+        $this->data['title'] = $title;
+        $this->data['image'] = (string) $imageUrl;
+        $this->data['state'] = self::STATE_COMPLETE;
+
+        return $this;
     }
 
     public function getUuid()
@@ -34,20 +47,6 @@ class Bookmark implements \JsonSerializable
         return (object) $this->data;
     }
 
-    public function updateTitle($title)
-    {
-        $this->data['title'] = $title;
-
-        return $this;
-    }
-
-    public function updateImageUrl(Url $imageUrl)
-    {
-        $this->data['image'] = (string) $imageUrl;
-
-        return $this;
-    }
-
     public function unserialize(array $data)
     {
         return new self(
@@ -61,6 +60,7 @@ class Bookmark implements \JsonSerializable
         return array(
             'uuid' => (string) $this->uuid,
             'url' => (string) $this->url,
+            'state' => $this->data['state'],
             'title' => (string) $this->url,
             'type' => $this->data['type'],
             'image' => null,
