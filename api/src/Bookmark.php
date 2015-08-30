@@ -4,7 +4,7 @@ namespace App;
 
 use Rhumsaa\Uuid\Uuid;
 
-class Bookmark
+class Bookmark implements \JsonSerializable
 {
     private $uuid;
     private $url;
@@ -53,6 +53,17 @@ class Bookmark
         return new self(
             Uuid::fromString($data['uuid']),
             new Url($data['url'])
+        );
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'uuid' => (string) $this->uuid,
+            'url' => (string) $this->url,
+            'title' => (string) $this->url,
+            'type' => $this->data['type'],
+            'image' => null,
         );
     }
 }
