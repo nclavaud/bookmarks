@@ -10,7 +10,9 @@ class OpenGraphDescriptionParser implements DataParser
     public function find(Crawler $crawler)
     {
         try {
-            return $crawler->filterXPath('//meta[@property="og:description"]')->attr('content');
+            $description = $crawler->filterXPath('//meta[@property="og:description"]')->attr('content');
+
+            return empty($description) ? null : $description;
         } catch (\InvalidArgumentException $e) {
             return null;
         }
