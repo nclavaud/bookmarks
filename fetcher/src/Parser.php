@@ -13,7 +13,7 @@ class Parser
         $crawler = new Crawler($content);
 
         try {
-            $data->title = $crawler->filterXPath('//head/title')->text();
+            $data->title = trim($crawler->filterXPath('//head/title')->text());
         } catch (\InvalidArgumentException $e) {
             $data->title = null;
         }
@@ -29,10 +29,10 @@ class Parser
         }
 
         try {
-            $data->description = $crawler->filterXPath('//meta[@property="og:description"]')->attr('content');
+            $data->description = trim($crawler->filterXPath('//meta[@property="og:description"]')->attr('content'));
         } catch (\InvalidArgumentException $e) {
             try {
-                $data->description = $crawler->filterXPath('//meta[@name="description"]')->attr('content');
+                $data->description = trim($crawler->filterXPath('//meta[@name="description"]')->attr('content'));
             } catch (\InvalidArgumentException $e) {
                 $data->description = null;
             }
