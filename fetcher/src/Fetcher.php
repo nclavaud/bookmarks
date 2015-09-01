@@ -10,6 +10,7 @@ class Fetcher
             return new Resource(
                 $url,
                 '',
+                '',
                 $url,
                 'image'
             );
@@ -23,6 +24,7 @@ class Fetcher
         return new Resource(
             $url,
             $parsedData->title,
+            $parsedData->description,
             (null !== $parsedData->imageUrl) ? new Url($parsedData->imageUrl) : null,
             $parsedData->type
         );

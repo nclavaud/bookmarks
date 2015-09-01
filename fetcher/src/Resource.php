@@ -6,13 +6,15 @@ class Resource
 {
     private $url;
     private $title;
+    private $description;
     private $imageUrl;
     private $type;
 
-    public function __construct(Url $url, $title, Url $imageUrl = null, $type)
+    public function __construct(Url $url, $title, $description, Url $imageUrl = null, $type)
     {
         $this->url = $url;
         $this->title = $title;
+        $this->description = $description;
         $this->imageUrl = $imageUrl;
         $this->type = $type;
     }
@@ -25,6 +27,11 @@ class Resource
     public function getTitle()
     {
         return $this->title;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     public function getImageUrl()

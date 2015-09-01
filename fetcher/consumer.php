@@ -39,6 +39,7 @@ $callback = function ($msg) use ($fetcher) {
     echo sprintf('%s: %s%s', 'URL', $resource->getUrl(), PHP_EOL);
     echo sprintf('%s: %s%s', 'Type', $resource->getType(), PHP_EOL);
     echo sprintf('%s: %s%s', 'Title', $resource->getTitle(), PHP_EOL);
+    echo sprintf('%s: %s%s', 'Description', $resource->getDescription(), PHP_EOL);
     echo sprintf('%s: %s%s', 'Image URL', $resource->getImageUrl(), PHP_EOL);
 
     // call API
@@ -49,6 +50,7 @@ $callback = function ($msg) use ($fetcher) {
     $payload = json_encode((object) array(
         'type' => $resource->getType(),
         'title' => $resource->getTitle(),
+        'description' => $resource->getDescription(),
         'imageUrl' => (null !== $resource->getImageUrl()) ? (string) $resource->getImageUrl() : null,
     ));
     $browser = new \Buzz\Browser(new \Buzz\Client\Curl());

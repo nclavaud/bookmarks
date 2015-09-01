@@ -29,6 +29,16 @@ class Parser
         }
 
         try {
+            $data->description = $crawler->filterXPath('//meta[@property="og:description"]')->attr('content');
+        } catch (\InvalidArgumentException $e) {
+            try {
+                $data->description = $crawler->filterXPath('//meta[@name="description"]')->attr('content');
+            } catch (\InvalidArgumentException $e) {
+                $data->description = null;
+            }
+        }
+
+        try {
             $data->type = $crawler->filterXPath('//meta[@property="og:type"]')->attr('content');
         } catch (\InvalidArgumentException $e) {
             $data->type = 'unknown';
