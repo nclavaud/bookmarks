@@ -51,11 +51,12 @@ HTML;
     /**
      * @test
      */
-    public function it_will_use_first_image_tag_if_open_graph_image_is_missing()
+    public function it_will_use_first_absolute_image_tag_if_open_graph_image_is_missing()
     {
         $content = <<<'HTML'
 <html>
     <body>
+        <img src="/image-tag-relative.jpg" />
         <img src="http://example.org/image-tag.jpg" />
     </body>
 </html>
