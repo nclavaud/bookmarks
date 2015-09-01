@@ -187,7 +187,8 @@ var Bookmark = React.createClass({
     render: function() {
         var image = this.props.image || 'loader.png';
         var style = {
-            backgroundImage: 'url(' + image + ')'
+            backgroundImage: 'url(' + image + ')',
+            backgroundSize: 'cover'
         };
         return (
             <Link href={this.props.url}>
@@ -203,11 +204,15 @@ var Bookmark = React.createClass({
 var BookmarkAsStack = React.createClass({
     render: function() {
         var image = this.props.image || 'loader.png';
+        var style = {
+            backgroundImage: 'url(' + image + ')',
+            backgroundSize: 'cover'
+        };
         return (
             <div className="row">
                 <div className="col-md-2">
                     <Link href={this.props.url}>
-                        <img src={image} width="140" height="140" />
+                        <div className="bookmark" style={style}></div>
                     </Link>
                 </div>
                 <div className="col-md-10">
