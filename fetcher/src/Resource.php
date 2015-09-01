@@ -10,13 +10,15 @@ class Resource
     private $url;
     private $title;
     private $imageUrl;
+    private $type;
 
-    public function __construct(Uuid $uuid, Url $url, $title, Url $imageUrl = null)
+    public function __construct(Uuid $uuid, Url $url, $title, Url $imageUrl = null, $type = 'unknown')
     {
         $this->uuid = $uuid;
         $this->url = $url;
         $this->title = $title;
         $this->imageUrl = $imageUrl;
+        $this->type = $type;
     }
 
     public function getUuid()
@@ -37,6 +39,11 @@ class Resource
     public function getImageUrl()
     {
         return $this->imageUrl;
+    }
+
+    public function getType()
+    {
+        return $this->type;
     }
 
     public function __toString()

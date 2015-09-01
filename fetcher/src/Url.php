@@ -15,6 +15,11 @@ class Url
         $this->url = $url;
     }
 
+    public function isImage()
+    {
+        return preg_match('/\.jpg$/', $this->url);
+    }
+
     public function __toString()
     {
         return $this->url;
