@@ -2,28 +2,19 @@
 
 namespace Fetcher;
 
-use Rhumsaa\Uuid\Uuid;
-
 class Resource
 {
-    private $uuid;
     private $url;
     private $title;
     private $imageUrl;
     private $type;
 
-    public function __construct(Uuid $uuid, Url $url, $title, Url $imageUrl = null, $type)
+    public function __construct(Url $url, $title, Url $imageUrl = null, $type)
     {
-        $this->uuid = $uuid;
         $this->url = $url;
         $this->title = $title;
         $this->imageUrl = $imageUrl;
         $this->type = $type;
-    }
-
-    public function getUuid()
-    {
-        return $this->uuid;
     }
 
     public function getUrl()
@@ -48,6 +39,6 @@ class Resource
 
     public function __toString()
     {
-        return sprintf('%s %s %s', $this->uuid, $this->url, $this->title);
+        return sprintf('%s %s', $this->url, $this->title);
     }
 }

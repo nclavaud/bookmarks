@@ -36,7 +36,6 @@ $callback = function ($msg) use ($fetcher) {
     $url = $message->url;
 
     $resource = $fetcher->fetch(new Url($url));
-    echo sprintf('%s: %s%s', 'UUID', $resource->getUuid(), PHP_EOL);
     echo sprintf('%s: %s%s', 'URL', $resource->getUrl(), PHP_EOL);
     echo sprintf('%s: %s%s', 'Type', $resource->getType(), PHP_EOL);
     echo sprintf('%s: %s%s', 'Title', $resource->getTitle(), PHP_EOL);
