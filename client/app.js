@@ -117,6 +117,7 @@ var Page = React.createClass({
                     <NavItem eventKey={'table'} href="#"><Glyphicon glyph="th-list" /></NavItem>
                     <NavItem eventKey={'blocks'} href="#"><Glyphicon glyph="th" /></NavItem>
                     <NavItem eventKey={'stack'} href="#"><Glyphicon glyph="menu-hamburger" /></NavItem>
+                    <NavItem eventKey={'slides'} href="#"><Glyphicon glyph="picture" /></NavItem>
                 </Nav>
                 <AddBookmarkForm onAddBookmarkSubmit={this.handleAddBookmarkSubmit} />
                 <div style={{"marginTop": "1em"}}>
@@ -173,6 +174,18 @@ var BookmarkList = React.createClass({
             );
         }
 
+        if ('slides' == this.props.display) {
+            var bookmarks = this.props.resources.map(function (bookmark) {
+                return <BookmarkAsSlide key={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} description={bookmark.description} />
+            });
+
+            return (
+                <div className="slides-container">
+                    {bookmarks}
+                </div>
+            );
+        }
+
         var rows = this.props.resources.map(function (bookmark) {
             return <BookmarkAsTableRow key={bookmark.uuid} state={bookmark.state} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} onBookmarkDelete={this.props.onBookmarkDelete.bind(null, bookmark.uuid)}/>
         }, this);
@@ -221,6 +234,15 @@ var BookmarkAsStack = React.createClass({
                     <p>{this.props.description}</p>
                 </div>
             </div>
+        );
+    }
+});
+
+var BookmarkAsSlide = React.createClass({
+    render: function() {
+        var image = this.props.image || 'loader.png';
+        return (
+            <img src={image} />
         );
     }
 });
