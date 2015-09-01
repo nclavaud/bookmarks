@@ -12,7 +12,7 @@ class Resource
     private $imageUrl;
     private $type;
 
-    public function __construct(Uuid $uuid, Url $url, $title, Url $imageUrl = null, $type = 'unknown')
+    public function __construct(Uuid $uuid, Url $url, $title, Url $imageUrl = null, $type)
     {
         $this->uuid = $uuid;
         $this->url = $url;
