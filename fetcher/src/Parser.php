@@ -12,35 +12,26 @@ class Parser
 
         $crawler = new Crawler($content);
 
-        try {
-            $data->title = trim($crawler->filterXPath('//head/title')->text());
-        } catch (\InvalidArgumentException $e) {
-            $data->title = null;
-        }
+        $data->title = (new Parser\TitleParser())->find($crawler);
 
-        try {
-            $data->imageUrl = $crawler->filterXPath('//meta[@property="og:image"]')->attr('content');
-        } catch (\InvalidArgumentException $e) {
-            try {
-                $data->imageUrl = $crawler->filterXPath('//img[starts-with(@src, \'http\')]')->attr('src');
-            } catch (\InvalidArgumentException $e) {
-                $data->imageUrl = null;
-            }
-        }
+        $imageParser = new Parser\ChainParser(
+            array(
+                new Parser\OpenGraphImageParser(),
+                new Parser\ImageTagParser(),
+            )
+        );
+        $data->imageUrl = $imageParser->find($crawler);
 
-        try {
-            $data->description = trim($crawler->filterXPath('//meta[@property="og:description"]')->attr('content'));
-        } catch (\InvalidArgumentException $e) {
-            try {
-                $data->description = trim($crawler->filterXPath('//meta[@name="description"]')->attr('content'));
-            } catch (\InvalidArgumentException $e) {
-                $data->description = null;
-            }
-        }
+        $descriptionParser = new Parser\ChainParser(
+            array(
+                new Parser\OpenGraphDescriptionParser(),
+                new Parser\MetaDescriptionParser(),
+            )
+        );
+        $data->description = $descriptionParser->find($crawler);
 
-        try {
-            $data->type = $crawler->filterXPath('//meta[@property="og:type"]')->attr('content');
-        } catch (\InvalidArgumentException $e) {
+        $data->type = (new Parser\OpenGraphTypeParser())->find($crawler);
+        if (null === $data->type) {
             $data->type = 'unknown';
         }
 
