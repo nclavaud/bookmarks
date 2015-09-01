@@ -116,6 +116,7 @@ var Page = React.createClass({
                 <Nav bsStyle='pills' activeKey={this.state.display} onSelect={this.changeDisplay}>
                     <NavItem eventKey={'table'} href="#"><Glyphicon glyph="th-list" /></NavItem>
                     <NavItem eventKey={'blocks'} href="#"><Glyphicon glyph="th" /></NavItem>
+                    <NavItem eventKey={'stack'} href="#"><Glyphicon glyph="menu-hamburger" /></NavItem>
                 </Nav>
                 <AddBookmarkForm onAddBookmarkSubmit={this.handleAddBookmarkSubmit} />
                 <div style={{"marginTop": "1em"}}>
@@ -162,6 +163,16 @@ var BookmarkList = React.createClass({
             );
         }
 
+        if ('stack' == this.props.display) {
+            var bookmarks = this.props.resources.map(function (bookmark) {
+                return <BookmarkAsStack key={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} description={bookmark.description} />
+            });
+
+            return (
+                <div>{bookmarks}</div>
+            );
+        }
+
         var rows = this.props.resources.map(function (bookmark) {
             return <BookmarkAsTableRow key={bookmark.uuid} state={bookmark.state} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} onBookmarkDelete={this.props.onBookmarkDelete.bind(null, bookmark.uuid)}/>
         }, this);
@@ -185,6 +196,26 @@ var Bookmark = React.createClass({
                     <div className="type">{this.props.type}</div>
                 </div>
             </Link>
+        );
+    }
+});
+
+var BookmarkAsStack = React.createClass({
+    render: function() {
+        var image = this.props.image || 'loader.png';
+        return (
+            <div className="row">
+                <div className="col-md-2">
+                    <Link href={this.props.url}>
+                        <img src={image} width="140" height="140" />
+                    </Link>
+                </div>
+                <div className="col-md-10">
+                    <h2>{this.props.title}</h2>
+                    <p>{this.props.type}</p>
+                    <p>{this.props.description}</p>
+                </div>
+            </div>
         );
     }
 });
