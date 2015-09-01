@@ -61,6 +61,7 @@ $app->post('/{uuid}', function (Request $request, $uuid) use ($app) {
     $bookmark = $app['bookmark.repository']->find(Uuid::fromString($uuid));
 
     $bookmark->complete(
+        $request->request->get('type'),
         $request->request->get('title'),
         new App\Url($request->request->get('imageUrl'))
     );
