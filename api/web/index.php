@@ -63,6 +63,7 @@ $app->post('/{uuid}', function (Request $request, $uuid) use ($app) {
     $bookmark->complete(
         $request->request->get('type'),
         $request->request->get('title'),
+        $request->request->get('description'),
         new App\Url($request->request->get('imageUrl'))
     );
 

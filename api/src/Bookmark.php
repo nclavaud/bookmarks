@@ -23,10 +23,11 @@ class Bookmark implements \JsonSerializable
         );
     }
 
-    public function complete($type, $title, Url $imageUrl)
+    public function complete($type, $title, $description, Url $imageUrl)
     {
         $this->data['type'] = $type;
         $this->data['title'] = $title;
+        $this->data['description'] = $description;
         $this->data['image'] = (string) $imageUrl;
         $this->data['state'] = self::STATE_COMPLETE;
 
@@ -63,6 +64,7 @@ class Bookmark implements \JsonSerializable
             'url' => (string) $this->url,
             'state' => $this->data['state'],
             'title' => (string) $this->url,
+            'description' => (string) $this->description,
             'type' => $this->data['type'],
             'image' => null,
         );
