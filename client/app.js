@@ -175,14 +175,8 @@ var BookmarkList = React.createClass({
         }
 
         if ('slides' == this.props.display) {
-            var bookmarks = this.props.resources.map(function (bookmark) {
-                return <BookmarkAsSlide key={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} description={bookmark.description} />
-            });
-
             return (
-                <div className="slides-container">
-                    {bookmarks}
-                </div>
+                <BookmarkSlider resources={this.props.resources} />
             );
         }
 
@@ -192,6 +186,51 @@ var BookmarkList = React.createClass({
 
         return (
             <Table striped bordered condensed><tbody>{rows}</tbody></Table>
+        );
+    }
+});
+
+var BookmarkSlider = React.createClass({
+    getInitialState: function() {
+        return {
+            current: 0
+        };
+    },
+    handleClickPrev: function() {
+        var newCurrent = this.state.current - 1;
+        if (newCurrent < 0) {
+            newCurrent = this.props.resources.length - 1;
+        }
+        this.setState({
+            current: newCurrent
+        });
+    },
+    handleClickNext: function() {
+        var newCurrent = this.state.current + 1;
+        if (newCurrent >= this.props.resources.length) {
+            newCurrent = 0;
+        }
+        this.setState({
+            current: newCurrent
+        });
+    },
+    render: function() {
+        var bookmarks = this.props.resources.map(function (bookmark, index) {
+            var isVisible = (index == this.state.current);
+
+            return <BookmarkAsSlide isVisible={isVisible} key={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} description={bookmark.description} />
+        }.bind(this));
+
+        return (
+            <div>
+                <div>
+                    <Button onClick={this.handleClickPrev}>Prev</Button>
+                    <Button onClick={this.handleClickNext}>Next</Button>
+                </div>
+                <div className="slides-container">
+                    {bookmarks}
+                </div>
+            </div>
         );
     }
 });
@@ -241,8 +280,9 @@ var BookmarkAsStack = React.createClass({
 var BookmarkAsSlide = React.createClass({
     render: function() {
         var image = this.props.image || 'loader.png';
+        var className = this.props.isVisible ? 'visible' : 'invisible';
         return (
-            <img src={image} />
+            <img src={image} className={className} />
         );
     }
 });
