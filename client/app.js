@@ -118,6 +118,7 @@ var Page = React.createClass({
                     <NavItem eventKey={'blocks'} href="#"><Glyphicon glyph="th" /></NavItem>
                     <NavItem eventKey={'stack'} href="#"><Glyphicon glyph="menu-hamburger" /></NavItem>
                     <NavItem eventKey={'slides'} href="#"><Glyphicon glyph="picture" /></NavItem>
+                    <NavItem eventKey={'video'} href="#"><Glyphicon glyph="film" /></NavItem>
                 </Nav>
                 <AddBookmarkForm onAddBookmarkSubmit={this.handleAddBookmarkSubmit} />
                 <div style={{"marginTop": "1em"}}>
@@ -180,6 +181,12 @@ var BookmarkList = React.createClass({
             );
         }
 
+        if ('video' == this.props.display) {
+            return (
+                <BookmarkVideoPlaylist resources={this.props.resources} />
+            );
+        }
+
         var rows = this.props.resources.map(function (bookmark) {
             return <BookmarkAsTableRow key={bookmark.uuid} state={bookmark.state} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} onBookmarkDelete={this.props.onBookmarkDelete.bind(null, bookmark.uuid)}/>
         }, this);
@@ -219,6 +226,51 @@ var BookmarkSlider = React.createClass({
             var isVisible = (index == this.state.current);
 
             return <BookmarkAsSlide isVisible={isVisible} key={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} description={bookmark.description} />
+        }.bind(this));
+
+        return (
+            <div>
+                <div>
+                    <Button onClick={this.handleClickPrev}>Prev</Button>
+                    <Button onClick={this.handleClickNext}>Next</Button>
+                </div>
+                <div className="slides-container">
+                    {bookmarks}
+                </div>
+            </div>
+        );
+    }
+});
+
+var BookmarkVideoPlaylist = React.createClass({
+    getInitialState: function() {
+        return {
+            current: 0
+        };
+    },
+    handleClickPrev: function() {
+        var newCurrent = this.state.current - 1;
+        if (newCurrent < 0) {
+            newCurrent = this.props.resources.length - 1;
+        }
+        this.setState({
+            current: newCurrent
+        });
+    },
+    handleClickNext: function() {
+        var newCurrent = this.state.current + 1;
+        if (newCurrent >= this.props.resources.length) {
+            newCurrent = 0;
+        }
+        this.setState({
+            current: newCurrent
+        });
+    },
+    render: function() {
+        var bookmarks = this.props.resources.map(function (bookmark, index) {
+            var isVisible = (index == this.state.current);
+
+            return <BookmarkAsVideoPlaylistItem isVisible={isVisible} key={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} description={bookmark.description} video={bookmark.video} />
         }.bind(this));
 
         return (
@@ -283,6 +335,15 @@ var BookmarkAsSlide = React.createClass({
         var className = this.props.isVisible ? 'visible' : 'invisible';
         return (
             <img src={image} className={className} />
+        );
+    }
+});
+
+var BookmarkAsVideoPlaylistItem = React.createClass({
+    render: function() {
+        var className = this.props.isVisible ? 'visible' : 'invisible';
+        return (
+            <iframe src={this.props.video} className={className} />
         );
     }
 });
