@@ -267,11 +267,13 @@ var BookmarkVideoPlaylist = React.createClass({
         });
     },
     render: function() {
-        var bookmarks = this.props.resources.map(function (bookmark, index) {
-            var isVisible = (index == this.state.current);
-
-            return <BookmarkAsVideoPlaylistItem isVisible={isVisible} key={bookmark.uuid} type={bookmark.type} title={bookmark.title} image={bookmark.image} url={bookmark.url} description={bookmark.description} video={bookmark.video} />
-        }.bind(this));
+        var bookmarks = this.props.resources
+            .filter(function (bookmark, index) {
+                return index == this.state.current;
+            }.bind(this))
+            .map(function (bookmark, index) {
+                return <BookmarkAsVideoPlaylistItem key={bookmark.uuid} title={bookmark.title} url={bookmark.url} description={bookmark.description} video={bookmark.video} />
+            }.bind(this));
 
         return (
             <div>
@@ -341,9 +343,8 @@ var BookmarkAsSlide = React.createClass({
 
 var BookmarkAsVideoPlaylistItem = React.createClass({
     render: function() {
-        var className = this.props.isVisible ? 'visible' : 'invisible';
         return (
-            <iframe src={this.props.video} className={className} />
+            <iframe src={this.props.video} width="500" height="300" frameBorder="0" />
         );
     }
 });
