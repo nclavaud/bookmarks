@@ -60,13 +60,15 @@ $app->post('/', function (Request $request) use ($app) {
 $app->post('/{uuid}', function (Request $request, $uuid) use ($app) {
     $bookmark = $app['bookmark.repository']->find(Uuid::fromString($uuid));
 
-    $url = $request->request->get('imageUrl');
+    $imageUrl = $request->request->get('imageUrl');
+    $videoUrl = $request->request->get('videoUrl');
 
     $bookmark->complete(
         $request->request->get('type'),
         $request->request->get('title'),
         $request->request->get('description'),
-        null === $url ? null : new App\Url($url)
+        null === $imageUrl ? null : new App\Url($imageUrl),
+        null === $videoUrl ? null : new App\Url($videoUrl)
     );
 
     $app['bookmark.repository']->update($bookmark);
