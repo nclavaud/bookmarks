@@ -12,6 +12,7 @@ class Fetcher
                 '',
                 '',
                 $url,
+                null,
                 'image'
             );
         }
@@ -26,6 +27,7 @@ class Fetcher
             $parsedData->title,
             $parsedData->description,
             (null !== $parsedData->imageUrl) ? new Url($parsedData->imageUrl) : null,
+            (null !== $parsedData->videoUrl) ? new Url($parsedData->videoUrl) : null,
             $parsedData->type
         );
     }

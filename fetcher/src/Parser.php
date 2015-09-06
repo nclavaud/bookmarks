@@ -22,6 +22,8 @@ class Parser
         );
         $data->imageUrl = $imageParser->find($crawler);
 
+        $data->videoUrl = (new Parser\OpenGraphVideoParser())->find($crawler);
+
         $descriptionParser = new Parser\ChainParser(
             array(
                 new Parser\OpenGraphDescriptionParser(),

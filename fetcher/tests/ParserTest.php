@@ -18,6 +18,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         <meta property="og:image" content="http://example.org/image.jpg" />
         <meta property="og:type" content="album" />
         <meta property="og:description" content="A fabulous album." />
+        <meta property="og:video:url" content="https://example.org/video/">
     </head>
     <body>
         <h1>A new post</h1>
@@ -32,6 +33,7 @@ HTML;
         $this->assertEquals('http://example.org/image.jpg', $parsedData->imageUrl);
         $this->assertEquals('album', $parsedData->type);
         $this->assertEquals('A fabulous album.', $parsedData->description);
+        $this->assertEquals('https://example.org/video/', $parsedData->videoUrl);
     }
 
     /**

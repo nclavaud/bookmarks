@@ -41,6 +41,7 @@ $callback = function ($msg) use ($fetcher) {
     echo sprintf('%s: %s%s', 'Title', $resource->getTitle(), PHP_EOL);
     echo sprintf('%s: %s%s', 'Description', $resource->getDescription(), PHP_EOL);
     echo sprintf('%s: %s%s', 'Image URL', $resource->getImageUrl(), PHP_EOL);
+    echo sprintf('%s: %s%s', 'Video URL', $resource->getVideoUrl(), PHP_EOL);
 
     // call API
     $url = sprintf('http://api:8080/%s', $message->uuid);
@@ -52,6 +53,7 @@ $callback = function ($msg) use ($fetcher) {
         'title' => $resource->getTitle(),
         'description' => $resource->getDescription(),
         'imageUrl' => (null !== $resource->getImageUrl()) ? (string) $resource->getImageUrl() : null,
+        'videoUrl' => (null !== $resource->getVideoUrl()) ? (string) $resource->getVideoUrl() : null,
     ));
     $browser = new \Buzz\Browser(new \Buzz\Client\Curl());
     $response = $browser->post($url, $headers, $payload);
