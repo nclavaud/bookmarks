@@ -1,4 +1,4 @@
-(function() {
+(function($) {
     function getCurrentTabUrl(callback) {
         var queryInfo = {
             active: true,
@@ -13,13 +13,34 @@
     }
 
     function message(string) {
-        document.getElementById('msg').textContent = string;
-        document.getElementById('url').value = string;
+        $('#msg').html(string);
     }
 
     document.addEventListener('DOMContentLoaded', function() {
         getCurrentTabUrl(function(url) {
-            message(url);
+            $('#url').attr('value', url);
+            message('');
+            $('#bookmark-form').show();
+        });
+
+        $('#bookmark-form').on('submit', function (event) {
+            event.preventDefault();
+            var form = $(this);
+            $('#submit').attr('disabled', 'disabled');
+            $.post(
+                form.attr('action'),
+                form.serialize(),
+                function(data, textStatus, jqXHR) {
+                    form.hide();
+                    message('✓&nbsp;Bookmark&nbsp;added!');
+                },
+                'json'
+            );
+        });
+
+        $('#close').on('click', function(event) {
+            event.preventDefault();
+            window.close();
         });
     });
-})();
+})(jQuery);
