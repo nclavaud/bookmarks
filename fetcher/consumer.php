@@ -56,12 +56,11 @@ $callback = function ($msg) use ($fetcher) {
         'videoUrl' => (null !== $resource->getVideoUrl()) ? (string) $resource->getVideoUrl() : null,
     ));
     $browser = new \Buzz\Browser(new \Buzz\Client\Curl());
-    $response = $browser->post($url, $headers, $payload);
+    $browser->post($url, $headers, $payload);
 };
 
 $channel->basic_consume('bookmark', '', false, true, false, false, $callback);
 
-//while (count($channel->callbacks)) {
 while (true) {
     $channel->wait();
 }
