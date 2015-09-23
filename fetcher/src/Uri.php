@@ -31,7 +31,7 @@ class Uri
 
     public function isImage()
     {
-        return preg_match('/\.jpg$/', $this->uri);
+        return preg_match('/\.(jpg|jpeg|png|gif)$/i', $this->uri);
     }
 
     public function isRoot()
