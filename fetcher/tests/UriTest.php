@@ -3,6 +3,7 @@
 namespace Fetcher\Tests;
 
 use Fetcher\Uri;
+use Fetcher\Url;
 
 class UriTest extends \PHPUnit_Framework_TestCase
 {
@@ -70,19 +71,37 @@ class UriTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @dataProvider absoluteUrlProvider
+     * @dataProvider isAbsoluteProvider
      */
     public function it_can_detect_absolute_uris($uri, $expected)
     {
         $this->assertEquals($expected, (new Uri($uri))->isAbsolute());
     }
 
-    public function absoluteUrlProvider()
+    public function isAbsoluteProvider()
     {
         return array(
             array('http://example.org/', true),
             array('https://example.org/', true),
             array('a/b/c.html', false),
+        );
+    }
+
+    /**
+     * @test
+     * @dataProvider toAbsoluteUrlProvider
+     */
+    public function it_can_transform_a_relative_uri_into_an_absolute_url($url, $uri, $expected)
+    {
+        $this->assertEquals($expected, (new Uri($uri))->toAbsoluteUrl(new Url($url)));
+    }
+
+    public function toAbsoluteUrlProvider()
+    {
+        return array(
+            array('http://www.example.org/', 'a.html', 'http://www.example.org/a.html'),
+            array('http://www.example.org/a/b.html', 'c.html', 'http://www.example.org/a/c.html'),
+            array('http://www.example.org/a/b/', '/c.html', 'http://www.example.org/c.html'),
         );
     }
 }
