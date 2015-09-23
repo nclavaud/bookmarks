@@ -65,7 +65,7 @@ class Bookmark implements \JsonSerializable
             'url' => (string) $this->url,
             'state' => $this->data['state'],
             'title' => (string) $this->url,
-            'description' => (string) $this->description,
+            'description' => (string) $this->data['description'],
             'type' => $this->data['type'],
             'image' => null,
             'video' => null,
