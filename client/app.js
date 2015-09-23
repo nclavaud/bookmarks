@@ -10,7 +10,7 @@ var Page = React.createClass({
     getInitialState: function() {
         return {
             resources: [],
-            display: 'table'
+            display: 'blocks'
         };
     },
     componentDidMount: function() {
@@ -114,8 +114,8 @@ var Page = React.createClass({
         return (
             <div className="container" style={{marginTop: "1em"}}>
                 <Nav bsStyle='pills' activeKey={this.state.display} onSelect={this.changeDisplay}>
-                    <NavItem eventKey={'table'} href="#"><Glyphicon glyph="th-list" /></NavItem>
                     <NavItem eventKey={'blocks'} href="#"><Glyphicon glyph="th" /></NavItem>
+                    <NavItem eventKey={'table'} href="#"><Glyphicon glyph="th-list" /></NavItem>
                     <NavItem eventKey={'stack'} href="#"><Glyphicon glyph="menu-hamburger" /></NavItem>
                     <NavItem eventKey={'slides'} href="#"><Glyphicon glyph="picture" /></NavItem>
                     <NavItem eventKey={'video'} href="#"><Glyphicon glyph="film" /></NavItem>
