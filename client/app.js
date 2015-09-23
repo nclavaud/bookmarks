@@ -120,7 +120,9 @@ var Page = React.createClass({
                     <NavItem eventKey={'slides'} href="#"><Glyphicon glyph="picture" /></NavItem>
                     <NavItem eventKey={'video'} href="#"><Glyphicon glyph="film" /></NavItem>
                 </Nav>
-                <AddBookmarkForm onAddBookmarkSubmit={this.handleAddBookmarkSubmit} />
+                <div style={{"marginTop": "1em"}}>
+                    <AddBookmarkForm onAddBookmarkSubmit={this.handleAddBookmarkSubmit} />
+                </div>
                 <div style={{"marginTop": "1em"}}>
                     <BookmarkList resources={this.state.resources} display={this.state.display} onBookmarkDelete={this.handleBookmarkDelete} />
                 </div>
@@ -144,10 +146,10 @@ var AddBookmarkForm = React.createClass({
         return;
     },
     render: function() {
+        const inputButton = <ButtonInput type="submit" value="Add" bsStyle="primary" bsSize="small" />;
         return (
             <form onSubmit={this.handleSubmit}>
-                <Input type="text" placeholder="Enter an URL to bookmark" ref="url" />
-                <ButtonInput type="submit" value="Add" />
+                <Input type="text" placeholder="Enter an URL to bookmark" ref="url" aria-label="URL" bsSize="small" buttonAfter={inputButton} />
             </form>
         );
     }
