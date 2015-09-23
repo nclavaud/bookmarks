@@ -67,4 +67,22 @@ class UriTest extends \PHPUnit_Framework_TestCase
             array('http://example.org/a.html', false),
         );
     }
+
+    /**
+     * @test
+     * @dataProvider absoluteUrlProvider
+     */
+    public function it_can_detect_absolute_uris($uri, $expected)
+    {
+        $this->assertEquals($expected, (new Uri($uri))->isAbsolute());
+    }
+
+    public function absoluteUrlProvider()
+    {
+        return array(
+            array('http://example.org/', true),
+            array('https://example.org/', true),
+            array('a/b/c.html', false),
+        );
+    }
 }
