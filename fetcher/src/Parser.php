@@ -6,7 +6,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class Parser
 {
-    public function parse($content)
+    public function parse($content, Url $url)
     {
         $data = (object) array();
 
@@ -21,6 +21,9 @@ class Parser
             )
         );
         $data->imageUrl = $imageParser->find($crawler);
+        if (null !== $data->imageUrl) {
+            $data->imageUrl = (new Uri($imageParser->find($crawler)))->toAbsoluteUrl($url);
+        }
 
         $data->videoUrl = (new Parser\OpenGraphVideoParser())->find($crawler);
 

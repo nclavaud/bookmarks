@@ -20,7 +20,7 @@ class Fetcher
         $browser = new \Buzz\Browser(new \Buzz\Client\Curl());
         $response = $browser->get((string) $url);
 
-        $parsedData = (new Parser())->parse($response->getContent());
+        $parsedData = (new Parser())->parse($response->getContent(), $url);
 
         return new Resource(
             $url,

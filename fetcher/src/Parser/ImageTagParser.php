@@ -10,7 +10,7 @@ class ImageTagParser implements DataParser
     public function find(Crawler $crawler)
     {
         try {
-            return $crawler->filterXPath('//img[starts-with(@src, \'http\')]')->attr('src');
+            return $crawler->filterXPath('//img')->attr('src');
         } catch (\InvalidArgumentException $e) {
             return null;
         }

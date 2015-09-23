@@ -3,6 +3,7 @@
 namespace Fetcher\Tests;
 
 use Fetcher\Parser;
+use Fetcher\Url;
 
 class ParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,6 +12,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
      */
     public function it_can_parse_a_web_page()
     {
+        $url = new Url('http://example.org/'); 
         $content = <<<'HTML'
 <html>
     <head>
@@ -27,7 +29,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
 </html>
 HTML;
 
-        $parsedData = (new Parser())->parse($content);
+        $parsedData = (new Parser())->parse($content, $url);
 
         $this->assertEquals('My blog', $parsedData->title);
         $this->assertEquals('http://example.org/image.jpg', $parsedData->imageUrl);
@@ -41,12 +43,13 @@ HTML;
      */
     public function it_can_parse_an_empty_web_page()
     {
+        $url = new Url('http://example.org/'); 
         $content = <<<'HTML'
 <html>
 </html>
 HTML;
 
-        $parsedData = (new Parser())->parse($content);
+        $parsedData = (new Parser())->parse($content, $url);
 
         $this->assertEquals(null, $parsedData->title);
         $this->assertEquals(null, $parsedData->imageUrl);
@@ -55,8 +58,9 @@ HTML;
     /**
      * @test
      */
-    public function it_will_use_first_absolute_image_tag_if_open_graph_image_is_missing()
+    public function it_will_use_first_image_tag_if_open_graph_image_is_missing()
     {
+        $url = new Url('http://example.org/'); 
         $content = <<<'HTML'
 <html>
     <body>
@@ -66,8 +70,8 @@ HTML;
 </html>
 HTML;
 
-        $parsedData = (new Parser())->parse($content);
+        $parsedData = (new Parser())->parse($content, $url);
 
-        $this->assertEquals('http://example.org/image-tag.jpg', $parsedData->imageUrl);
+        $this->assertEquals('http://example.org/image-tag-relative.jpg', $parsedData->imageUrl);
     }
 }
