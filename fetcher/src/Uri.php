@@ -18,10 +18,10 @@ class Uri
         }
 
         if ($this->isRoot()) {
-            return $url->getRootDomain() . mb_substr((string) $this->uri, 1);
+            return new Url($url->getRootDomain() . mb_substr((string) $this->uri, 1));
         }
 
-        return $url->getLastDir() . $this->uri;
+        return new Url($url->getLastDir() . $this->uri);
     }
 
     public function isAbsolute()

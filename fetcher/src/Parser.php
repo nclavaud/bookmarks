@@ -22,7 +22,7 @@ class Parser
         );
         $data->imageUrl = $imageParser->find($crawler);
         if (null !== $data->imageUrl) {
-            $data->imageUrl = (new Uri($imageParser->find($crawler)))->toAbsoluteUrl($url);
+            $data->imageUrl = (string) (new Uri($imageParser->find($crawler)))->toAbsoluteUrl($url);
         }
 
         $data->videoUrl = (new Parser\OpenGraphVideoParser())->find($crawler);

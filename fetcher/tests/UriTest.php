@@ -93,7 +93,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
      */
     public function it_can_transform_a_relative_uri_into_an_absolute_url($url, $uri, $expected)
     {
-        $this->assertEquals($expected, (new Uri($uri))->toAbsoluteUrl(new Url($url)));
+        $this->assertEquals($expected, (string) (new Uri($uri))->toAbsoluteUrl(new Url($url)));
     }
 
     public function toAbsoluteUrlProvider()
