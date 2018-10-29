@@ -3,7 +3,7 @@ client:
     ports:
         - "80:80"
     volumes:
-        - client:/usr/share/nginx/html
+        - ./client:/usr/share/nginx/html
     links:
         - api
 
@@ -12,14 +12,14 @@ api:
     ports:
         - "8080:8080"
     volumes:
-        - api:/var/www
+        - ./api:/var/www
     links:
         - rabbitmq
 
 fetcher:
     build: fetcher
     volumes:
-        - fetcher:/var/www
+        - ./fetcher:/var/www
     links:
         - rabbitmq
         - api
